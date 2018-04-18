@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>   
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.3.xsd ">
+	<!-- 创建dao层组件 -->
+	<bean id="userDao" class="cn.com.dao.UserDaoImpl"></bean>
+	<!-- 配置service组件 
+	    id是spring容器创建的组件的名称，要唯一
+	    class 是需要创建对象的全限定类型名称
+	    UserService userService = new cn.com.service.UserService();
+	-->
+	<bean id="userService" class="cn.com.service.UserServiceImpl">
+		<!-- 注入userDao组件，到服务组件 
+			ref 是spring容器中要注入的对象的id -->
+		<property name="dao" ref="userDao"></property>
+	</bean>
+	<bean id="computer" class="cn.com.pojo.Computer">
+		<property name="screen" value="三星曲面屏"></property>
+		<property name="box" value="微软主机"></property>
+		<property name="price" value="1000.0"></property>
+	</bean>
+	<!-- 纸张对象 
+		 singleton 默认值 单例，spring容器中仅存在一个bean实例
+		 prototype 原型创建  每次调用getbean会产生新对象 
+		 request session applicaton-->
+	<bean id="paper" class="cn.com.pojo.Paper" scope="prototype">
+		<property name="size" value="B5"></property>
+	</bean>
+	<bean id="box" class="cn.com.pojo.Box">
+		<property name="color" value="黑白"></property>
+	</bean>
+	<bean id="printer" class="cn.com.pojo.Printer">
+		<property name="paper" ref="paper"></property>
+		<property name="box" ref="box"></property>
+	</bean>
+</beans>
